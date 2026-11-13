@@ -1,63 +1,54 @@
 # FoodGauge
 
-> FoodGauge is a free Android and iOS app that photographs a packaged food label, reads the printed ingredients and nutrition table with AI, and converts them into a single deterministic score from 1 to 5, together with the reasoning behind that score. It requires no barcode, no product database, and no user account.
+> FoodGauge is a free food label scanner for iPhone (Android in closed testing on Google Play). Scan a barcode, or photograph the ingredient label when a product has no record, to see ingredients, allergens, additives, E codes and available nutrition information, with the source of each fact. No account is needed.
 
 Site: https://teach-bot-sys.github.io/foodgauge-site/
+App Store: https://apps.apple.com/us/app/id6802302665
 Instagram: https://www.instagram.com/food.gauge/
 Contact: mrfatihkrkmz@gmail.com
 Publisher: Kaira Labs
-Platforms: Android, iOS
-Price: Free. No in-app purchases, no subscription.
-App interface languages: English, Turkish (Russian and Arabic planned)
+Platforms: iOS (live), Android (closed testing)
+Price: Free, contains ads
+App languages: English, Turkish, Spanish, French, Russian, Arabic
 Site languages: English, Turkish, Russian, Arabic
 
-## What makes FoodGauge different
+## How it works
 
-Most food scanning apps read a barcode and look the product up in a central database. If the product is not in that database the user gets "product not found". This happens constantly with local brands, small producers, imported goods that never entered the catalogue, damaged barcodes, and bakery or deli items.
+1. Scan a barcode or type it in. FoodGauge shows the ingredients and nutrition information it can find in community product records, together with where each fact came from. Barcode lookups need an internet connection.
+2. When a product has no record, or no barcode, photograph the ingredient label or choose an image from the gallery. The text is read on the phone, and the user can review and correct it before it is used.
+3. Allergens the user flags in Settings are highlighted. Additives are recognised by E code or by name. Contains and may-contain declarations are shown separately.
 
-FoodGauge does not use barcodes and does not query a product database. It reads the printed label directly from a photo. There is therefore no catalogue for a product to be missing from.
+## Evidence before scores
 
-## How the score is calculated
+- Most products open with an "At a glance" card instead of an overall health score: the user's allergens, the number of additives, and sugar, saturated fat and salt amounts.
+- When the evidence required for a score is unavailable, the score is withheld. Missing or conflicting information stays visible.
+- Saved products and recent inspections can be reopened, and facts can be compared when a valid common measurement basis is available.
 
-The AI component only extracts what is visible on the label. The score itself is produced by a deterministic rule engine, so the same label always yields the same number.
+## Halal, vegan and vegetarian
 
-finalScore = nutritionQuality x 0.40 + processingIntensity x 0.35 + additiveRisk x 0.25
+For barcodes, halal, vegan and vegetarian status from community databases is shown and marked as not a certification. The ingredient list is also checked on the phone for related words, and the words found are shown. These are clues, not certifications.
 
-- Nutrition quality (40%): derived from the visible nutrition table — sugar, salt, fat, saturated fat, energy.
-- Processing intensity (35%): additive-like signals in the ingredient list plus an estimate of how processed the product is.
-- Additive risk (25%): evaluated against FoodGauge's own static additive rule set. FoodGauge does not claim any live lookup against EFSA, FDA, OpenFoodTox or Open Food Facts.
+## Offline use
 
-Override rule: if a high-risk additive, high-fructose corn syrup, or trans fat appears on the label, the final score is capped at 2.0 regardless of the other three signals.
-
-Result labels: Good Choice, Use with Caution, Weak Choice, Unclear.
-Turkish equivalents: İyi Seçim, Dikkatli, Zayıf Seçim, Belirsiz.
-FoodGauge never labels a product "healthy" or "unhealthy".
-
-## Added sugar vs total sugar
-
-The nutrition table figure for "sugars" is total sugar. It includes sugar naturally present in fruit or milk. Added sugar can only be identified from the ingredient list. FoodGauge therefore reads added sugar from the ingredient list and treats the nutrition table as context. A "no added sugar" claim on the front of a pack is not sufficient on its own; the ingredient list decides.
-
-## Unreadable labels
-
-FoodGauge does not guess. If a photo cannot be read reliably, the result is marked Unclear and the user is asked to retake the photo. Unreadable scans are not saved to history. Ingredients and nutrition values are never invented.
+Basic Mode reads labels on the device and includes a local E-code catalog, so it works without internet. New barcode lookups require a connection.
 
 ## Privacy
 
-- No account, registration, or personal profile.
-- The camera is used only after the user chooses to take a photo. The photo picker passes only the single selected image.
-- A compressed copy of the label image is sent to the analysis backend so the label can be read. It is not retained in the local history.
-- Raw images, base64 payloads, and image file paths are never written to local history.
-- Scan summaries and details are stored on the device only and can be deleted individually or cleared entirely.
+- No account, registration or personal profile.
+- The camera is used only after the user chooses to take a photo. The photo picker receives only the selected image.
+- Label text is read on the phone with OCR. In AI mode, only the extracted text is sent for analysis; the photo is not uploaded.
+- A barcode lookup sends the barcode number to fetch the product record.
+- Scan history is stored on the device and can be deleted record by record or cleared entirely.
 - The app shows ads; ad personalisation follows the consent choice made on first launch, which can be revisited from the privacy screen.
-- No medical profile, diet profile, or health record is created or requested.
+- No medical profile, diet profile or health record is created or requested.
 
-## Important limitations
+## Limitations
 
-FoodGauge is not a medical, diagnostic, treatment, allergy-safety, diet, or calorie-counting application. It provides general information based only on what is visible on a food label. It makes no health claims about any product and its score is not a judgement about whether a food is healthy or safe for any individual. FoodGauge does not use Nutri-Score branding and is not affiliated with any food authority or product database.
+FoodGauge provides general label information. It is not medical advice or a personalised nutrition plan. Source records do not replace the current package; users should check the label itself for allergy-related decisions. FoodGauge does not use Nutri-Score branding and is not affiliated with any food authority.
 
 ## Pages
 
-- [English](https://teach-bot-sys.github.io/foodgauge-site/): overview, scoring model, FAQ, privacy
-- [Türkçe](https://teach-bot-sys.github.io/foodgauge-site/tr.html): genel bakış, skorlama modeli, SSS, gizlilik
-- [Русский](https://teach-bot-sys.github.io/foodgauge-site/ru.html): обзор, модель оценки, вопросы, конфиденциальность
-- [العربية](https://teach-bot-sys.github.io/foodgauge-site/ar.html): نظرة عامة، نموذج التقييم، الأسئلة، الخصوصية
+- [English](https://teach-bot-sys.github.io/foodgauge-site/): overview, how it works, FAQ, privacy
+- [Türkçe](https://teach-bot-sys.github.io/foodgauge-site/tr.html): genel bakış, nasıl çalışır, SSS, gizlilik
+- [Русский](https://teach-bot-sys.github.io/foodgauge-site/ru.html): обзор, как это работает, вопросы, конфиденциальность
+- [العربية](https://teach-bot-sys.github.io/foodgauge-site/ar.html): نظرة عامة، كيف يعمل، الأسئلة، الخصوصية
